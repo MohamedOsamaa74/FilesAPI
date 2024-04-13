@@ -19,6 +19,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<IFileRepo, FileRepo>();
+builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

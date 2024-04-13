@@ -11,12 +11,10 @@ namespace FilesAPI.Controllers
     public class FilesController : ControllerBase
     {
         private readonly IFileService _fileService;
-        private readonly AppDbContext _context;
         private readonly IFileRepo _fileRepo;
-        public FilesController(IFileService fileService, AppDbContext context, IFileRepo fileRepo)
+        public FilesController(IFileService fileService,IFileRepo fileRepo)
         {
             _fileService = fileService;
-            _context = context;
             _fileRepo = fileRepo;
         }
 
@@ -28,20 +26,7 @@ namespace FilesAPI.Controllers
             {
                 return BadRequest("File is required");
             }
-            var folderName = "files";
-            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-            var filePath = await _fileService.UploadFileAsync(file, folderName, fileName);
-            var url = $"{Request.Scheme}://{Request.Host}/api/files/{folderName}/{fileName}";
-            //var url = Url.Content($"~/api/files/{folderName}/{fileName}");
-            var attachement = new Attachement
-            {
-                Title = file.FileName,
-                FilePath = filePath,
-                Url = url,
-                Type = file.ContentType
-            };
-            await _context.Files.AddAsync(attachement);
-            await _context.SaveChangesAsync();
+            var attachement = await _fileService.UploadFileAsync(file);
             return Ok(attachement);
         }
         #endregion
@@ -72,6 +57,5 @@ namespace FilesAPI.Controllers
             return NoContent();
         }
         #endregion
-
     }
 }

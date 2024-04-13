@@ -1,10 +1,12 @@
-﻿namespace FilesAPI.Interfaces
+﻿using FilesAPI.Entities;
+
+namespace FilesAPI.Interfaces
 {
     public interface IFileService
     {
-        Task<string> UploadFileAsync(IFormFile file, string folderName, string fileName);
-        Task<byte[]> DownloadFileAsync(string folderName, string fileName);
-        Task<bool> DeleteFileAsync(string folderName, string fileName);
-        Task<string> GetFilePathAsync(string folderName, string fileName);
+        public Task<Attachement> UploadFileAsync(IFormFile file);
+        public Task<byte[]> DownloadFileAsync(string folderName, string fileName);
+        public Task<bool> DeleteFileAsync(string folderName, string fileName);
+        public Task<string> GetFilePathAsync(string folderName, string fileName);
     }
 }
