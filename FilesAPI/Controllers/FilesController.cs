@@ -1,7 +1,5 @@
-﻿using FilesAPI.Entities;
-using FilesAPI.Interfaces;
+﻿using FilesAPI.Interfaces;
 using FilesAPI.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FilesAPI.Controllers
@@ -42,6 +40,20 @@ namespace FilesAPI.Controllers
                 return NotFound();
             }
             return File(file, fileEntity.Type, fileEntity.Title);
+        }
+        #endregion
+
+        #region ViewFile
+        [HttpGet("View-File{folderName}/{fileName}")]
+        public async Task<IActionResult> ViewFileAsync(string folderName, string fileName)
+        {
+            var fileEntity = await _fileRepo.GetByNameAsync(fileName);
+            var file = await _fileService.DownloadFileAsync(folderName, fileName);
+            if (file == null)
+            {
+                return NotFound();
+            }
+            return File(file, fileEntity.Type);
         }
         #endregion
 

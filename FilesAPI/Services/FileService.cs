@@ -1,8 +1,6 @@
-﻿using Azure.Core;
-using FilesAPI.Entities;
+﻿using FilesAPI.Entities;
 using FilesAPI.Interfaces;
 using FilesAPI.Repositories;
-using System.Net.Mail;
 
 namespace FilesAPI.Services
 {

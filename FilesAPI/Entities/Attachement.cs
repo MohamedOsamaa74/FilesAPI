@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace FilesAPI.Entities
+﻿namespace FilesAPI.Entities
 {
     public class Attachement
     {
